@@ -2,13 +2,10 @@ package com.erasmogames.br.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erasmogames.br.R
 import com.erasmogames.br.api.PokemonRepository
-import com.erasmogames.br.domain.Pokemon
-import com.erasmogames.br.domain.PokemonType
 
 class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
