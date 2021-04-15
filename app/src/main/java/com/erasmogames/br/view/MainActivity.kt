@@ -2,36 +2,42 @@ package com.erasmogames.br.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erasmogames.br.R
+import com.erasmogames.br.api.PokemonRepository
 import com.erasmogames.br.domain.Pokemon
 import com.erasmogames.br.domain.PokemonType
 
 class MainActivity : AppCompatActivity() {
+    lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rvPokemons)
+         recyclerView = findViewById(R.id.rvPokemons)
 
 
-        val charmander = Pokemon("https://static.wikia.nocookie.net/pokemonet/images/8/87/004CharmanderFRLG.png/revision/latest?cb=20130505000902&path-prefix=pt-br",
-                4,
-                "Charmander",
-                listOf(PokemonType("Fire")
-                )
-        )
-        val pokemons = listOf(
-                charmander,
-                charmander,
-                charmander,
-                charmander,
-                charmander
-        )
+       Thread(Runnable {
+           loadPokemons()
+       }).start()
 
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = PokemonAdapter(pokemons)
     }
+
+    private fun loadPokemons() {
+
+        val pokemonsApiResult = PokemonRepository.listPokemons()
+
+        pokemonsApiResult?.results?.let {
+
+            val layoutManager = LinearLayoutManager(this)
+            recyclerView.post{
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = PokemonAdapter(it)
+            }
+        }
+        }
+
 }

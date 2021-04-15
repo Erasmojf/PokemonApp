@@ -1,10 +1,11 @@
 package com.erasmogames.br.domain
 
 data class Pokemon(
-        val imageUrl: String,
-        val number: Int,
+        val imageUrl: String? = null,
+        val number: Int? = null,
         val name: String,
-        val types: List<PokemonType>
+        val url: String,
+        val types: List<PokemonType>? = null
 
 )
 {
